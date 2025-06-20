@@ -72,8 +72,46 @@ exports.bookRoutes.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, f
         const data = yield books_model_1.Book.findById(id);
         res.status(201).json({
             success: true,
-            message: "Book created successfully",
+            message: "Book retrieved  successfully",
             data,
+        });
+    }
+    catch (err) {
+        res.status(400).json({
+            success: false,
+            message: err === null || err === void 0 ? void 0 : err.message,
+            error: err,
+        });
+    }
+}));
+exports.bookRoutes.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+        console.log(updateData);
+        const data = yield books_model_1.Book.findByIdAndUpdate(id, updateData, { new: true });
+        res.status(201).json({
+            success: true,
+            message: "Book updated  successfully",
+            data,
+        });
+    }
+    catch (err) {
+        res.status(400).json({
+            success: false,
+            message: err === null || err === void 0 ? void 0 : err.message,
+            error: err,
+        });
+    }
+}));
+exports.bookRoutes.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        yield books_model_1.Book.findByIdAndDelete(id);
+        res.status(201).json({
+            success: true,
+            message: "Book deleted  successfully",
+            data: null,
         });
     }
     catch (err) {
